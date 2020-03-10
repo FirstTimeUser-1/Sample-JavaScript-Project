@@ -1,6 +1,23 @@
 const fs = require('fs');
 const readline = require('readline');
 
+typedef unsigned long long uint64;
+typedef uint32_t uint32;
+
+/* This really wants to be done with long integers */
+uint32 modexp(uint32 a, uint32 mod, const unsigned char exp[4]) {
+  int i,j;
+  uint32 r = 1;
+
+  for(i=3;i>=0;i--) {
+    for(j=7;j>=0;j--) {
+      r = ((uint64)r*r) % mod;
+      if((exp[i] >> j) & 1)
+        r = ((uint64)a*r) % mod;
+    }
+  }
+  return r;
+}
 
 console.log('create interface');
 
